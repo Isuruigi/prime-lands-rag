@@ -1,46 +1,36 @@
 # 🏠 Prime Lands — Production-Grade Real Estate Intelligence Platform
 
-> **AI Engineer Essentials | Mini Project 02 | Context Engineering**
+> **Zuu Crew AI | AI Engineer Essentials Bootcamp | Mini Project 02 | Context Engineering**
 
 A production-ready RAG system for Sri Lankan real estate, featuring hybrid search, corrective retrieval (CRAG), and cache-augmented generation (CAG) powered by Claude 3 Haiku and local FastEmbed embeddings.
-
----
 
 ## 🎯 Project Overview
 
 **Prime Lands** is not just another RAG demo. This is a **production-grade** implementation featuring:
 
-- ✅ **Hybrid Search**: Dense (FastEmbed BAAI/bge-small-en-v1.5) + Sparse (BM25) fusion
-- ✅ **CRAG Algorithm**: Per-document grading with corrective retrieval
-- ✅ **CAG Service**: Semantic caching with TTL and LRU eviction
-- ✅ **5 Chunking Strategies**: Semantic, Fixed, Sliding, Parent-Child, Late
-- ✅ **Cross-Encoder Reranking**: ms-marco-MiniLM for final precision
-- ✅ **RAGAS Evaluation**: Faithfulness, context recall, context precision
-- ✅ **Production Code**: Pydantic validation, structured logging, custom exceptions
-
----
+✅ **Hybrid Search**: Dense (FastEmbed BAAI/bge-small-en-v1.5) + Sparse (BM25) fusion  
+✅ **CRAG Algorithm**: Per-document grading with corrective retrieval  
+✅ **CAG Service**: Semantic caching with TTL and LRU eviction  
+✅ **5 Chunking Strategies**: Semantic, Fixed, Sliding, Parent-Child, Late  
+✅ **Cross-Encoder Reranking**: ms-marco-MiniLM for final precision  
+✅ **RAGAS Evaluation**: Faithfulness, context recall, context precision  
+✅ **Production Code**: Pydantic validation, structured logging, custom exceptions  
 
 ## 🏗️ Architecture
 
 ```
-┌─────────────────────────────────────────────────────────┐
-│  Playwright Crawler → PropertyDocument → JSONL Corpus   │
-└──────────────────────┬──────────────────────────────────┘
-                       ▼
-┌─────────────────────────────────────────────────────────┐
-│  5 Chunking Strategies → Hybrid Indexing (Qdrant)       │
-│  Dense (FastEmbed BAAI/bge-small-en-v1.5) + Sparse (BM25) → RRF Fusion           │
-└──────────────────────┬──────────────────────────────────┘
-                       ▼
-┌─────────────────────────────────────────────────────────┐
-│  CAG → Cache Hit? → Answer                              │
-│         │ miss                                           │
-│         ▼                                               │
-│  CRAG → Grade Docs → Route → Generate (Claude)         │
-└─────────────────────────────────────────────────────────┘
+Playwright Crawler  ->  PropertyDocument  ->  JSONL Corpus
+                               |
+                               v
+     5 Chunking Strategies  ->  Hybrid Indexing (Qdrant)
+     Dense (FastEmbed) + Sparse (BM25)  ->  RRF Fusion
+                               |
+                               v
+     CAG  ->  Cache Hit?  ->  Answer
+               | miss
+               v
+     CRAG  ->  Grade Docs  ->  Route  ->  Generate (Claude)
 ```
-
----
 
 ## 🚀 Quick Start
 
@@ -55,8 +45,9 @@ A production-ready RAG system for Sri Lankan real estate, featuring hybrid searc
 ### Installation
 
 ```bash
-# 1. Clone and navigate
-cd "d:\Zuu Crew Agentic AI\Projects\Mini Project 2"
+# 1. Clone the repository
+git clone https://github.com/Isuruigi/prime-lands-rag.git
+cd prime-lands-rag
 
 # 2. Create virtual environment
 python -m venv .venv
@@ -84,8 +75,6 @@ docker run -d --name qdrant -p 6333:6333 -p 6334:6334 ^
 # 8. Verify Qdrant is running
 curl http://localhost:6333/health
 ```
-
----
 
 ## 📦 Project Structure
 
@@ -134,16 +123,14 @@ prime_lands/
 │
 ├── outputs/
 │   ├── performance_comparison.csv  # RAG vs CRAG RAGAS scores
-│   ├── chunking_comparison.csv     # 5 strategy comparison
-│   ├── cag_stats.json              # Cache hit rate stats
+│   ├── chunking_comparison.csv     # 5 strategy comparison + RAGAS metrics
+│   ├── cag_stats.json              # 100-query CAG simulation results
 │   ├── crag_impact.csv             # 20-query CRAG vs RAG breakdown
 │   └── cost_analysis.json          # 3-scale cost projection (bonus)
 │
 └── report/
     └── engineering_report.pdf
 ```
-
----
 
 ## 🔧 Technology Stack
 
@@ -160,7 +147,16 @@ prime_lands/
 | **Validation** | Pydantic | Type-safe configuration |
 | **Logging** | Loguru | Structured logging |
 
----
+## 📊 Key Results
+
+| Metric | Value |
+|--------|-------|
+| Properties crawled | 19 |
+| CAG hit rate (100 queries) | 79% |
+| CAG speedup factor | 22.75x |
+| Best chunking faithfulness | 1.000 (fixed / parent_child / late) |
+| Semantic chunking faithfulness | 0.963 |
+| CRAG evaluations | 20 queries x 4 categories |
 
 ## 🎓 Usage Examples
 
@@ -196,54 +192,35 @@ result = await crag.query("3 bedroom villa in Colombo under 50M")
 print(result.answer)
 ```
 
----
-
-## 📊 Performance Metrics
-
-Evaluated using **RAGAS framework**:
-
-- **Faithfulness**: Answer grounded in context (no hallucinations)
-- **Context Recall**: Retrieved all relevant information
-- **Context Precision**: No irrelevant docs retrieved
-
-> **Note**: `answer_relevancy` was excluded — incompatible with local FastEmbed embeddings (produces NaN). `faithfulness`, `context_recall`, and `context_precision` are used instead.
-
-Plus cost analysis (tokens, API calls, latency).
-
----
-
 ## 🧪 Automated Pipeline Scripts
 
-For robust execution without Jupyter notebooks, use the provided Python scripts:
-
 ```bash
-# 1. Chunking & Analysis
+# Chunking + RAGAS evaluation across all 5 strategies
 python run_chunking.py
-# Generates: data/chunks/semantic_chunks.jsonl, outputs/chunking_comparison.csv
 
-# 2. Intelligence Pipeline (Indexing + RAG/CAG)
-python run_intelligence.py
-# Indexes to Qdrant (local FastEmbed) and runs test queries
+# Index all 5 collections into Qdrant
+python run_index_all.py
 
-# 3. Performance Benchmarking
+# Run 100-query CAG simulation
+python run_cag_stats.py
+
+# CRAG impact analysis (20 queries x 4 categories)
+python run_crag_impact.py
+
+# Full RAGAS benchmarking (RAG vs CRAG)
 python run_performance.py
-# Runs RAGAS evaluation (RAG vs CRAG) -> outputs/performance_comparison.csv
 ```
-
----
 
 ## 🔑 API Key Setup
 
-1. **OpenAI** (Optional, replaced by local FastEmbed): https://platform.openai.com/api-keys
-2. **Anthropic** (Required for Claude): https://console.anthropic.com/
+1. **Anthropic** (Required for Claude): https://console.anthropic.com/
+2. **OpenAI** (Optional, replaced by local FastEmbed): https://platform.openai.com/api-keys
 
 Add to `.env`:
 ```bash
 ANTHROPIC_API_KEY=sk-ant-...
 # OPENAI_API_KEY is NOT required — local FastEmbed handles all embeddings
 ```
-
----
 
 ## 📝 Project Deliverables
 
@@ -255,17 +232,6 @@ ANTHROPIC_API_KEY=sk-ant-...
 
 **Total: 100 points (+5 bonus)**
 
----
-
-## 🤝 Credits
-
-**Course**: AI Engineer Essentials  
-**Module**: Context Engineering  
-**Student**: Zuu Crew AI Engineer  
-**Instructor**: [Your Instructor Name]
-
----
-
 ## 📄 License
 
-MIT License - Built for educational purposes.
+MIT License — Built for educational purposes as part of the Zuu Crew AI Engineer Essentials Bootcamp.
