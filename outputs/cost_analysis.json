@@ -1,0 +1,87 @@
+{
+  "methodology": {
+    "rag_cost_per_query_usd": 0.000772,
+    "crag_cost_per_query_usd": 0.000805,
+    "embedding_cost": "OpenAI text-embedding-3-small (~$0.02/1M tokens — negligible at query scale)",
+    "qdrant_storage_cost_usd_month": 0.0001,
+    "llm_model": "claude-3-haiku-20240307",
+    "pricing_source": "Anthropic API (measured from actual runs, Feb 2026)"
+  },
+  "scales": {
+    "500_daily_users": {
+      "daily_users": 500,
+      "monthly_queries": 45000,
+      "rag_only": {
+        "llm_cost_usd": 34.74,
+        "storage_cost_usd": 0.0001,
+        "total_usd": 34.74,
+        "cost_per_user_usd": 0.0023
+      },
+      "rag_plus_cag": {
+        "llm_cost_usd": 20.84,
+        "storage_cost_usd": 0.0001,
+        "total_usd": 20.84,
+        "cag_savings_usd": 13.90,
+        "cag_savings_pct": 40.0,
+        "cost_per_user_usd": 0.0014
+      },
+      "crag_only": {
+        "llm_cost_usd": 36.22,
+        "storage_cost_usd": 0.0001,
+        "total_usd": 36.22,
+        "vs_rag_premium_usd": 1.48,
+        "cost_per_user_usd": 0.0024
+      }
+    },
+    "2000_daily_users": {
+      "daily_users": 2000,
+      "monthly_queries": 180000,
+      "rag_only": {
+        "llm_cost_usd": 138.96,
+        "storage_cost_usd": 0.0001,
+        "total_usd": 138.96,
+        "cost_per_user_usd": 0.0023
+      },
+      "rag_plus_cag": {
+        "llm_cost_usd": 83.38,
+        "storage_cost_usd": 0.0001,
+        "total_usd": 83.38,
+        "cag_savings_usd": 55.58,
+        "cag_savings_pct": 40.0,
+        "cost_per_user_usd": 0.0014
+      },
+      "crag_only": {
+        "llm_cost_usd": 144.90,
+        "storage_cost_usd": 0.0001,
+        "total_usd": 144.90,
+        "vs_rag_premium_usd": 5.94,
+        "cost_per_user_usd": 0.0024
+      }
+    },
+    "10000_daily_users": {
+      "daily_users": 10000,
+      "monthly_queries": 900000,
+      "rag_only": {
+        "llm_cost_usd": 694.80,
+        "storage_cost_usd": 0.0001,
+        "total_usd": 694.80,
+        "cost_per_user_usd": 0.0023
+      },
+      "rag_plus_cag": {
+        "llm_cost_usd": 416.88,
+        "storage_cost_usd": 0.0001,
+        "total_usd": 416.88,
+        "cag_savings_usd": 277.92,
+        "cag_savings_pct": 40.0,
+        "cost_per_user_usd": 0.0014
+      },
+      "crag_only": {
+        "llm_cost_usd": 724.50,
+        "storage_cost_usd": 0.0001,
+        "total_usd": 724.50,
+        "vs_rag_premium_usd": 29.70,
+        "cost_per_user_usd": 0.0024
+      }
+    }
+  }
+}

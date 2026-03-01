@@ -1,0 +1,6 @@
+strategy,faithfulness,context_recall,context_precision,avg_latency_ms,p95_latency_ms,retrieved_count,total_chunks,avg_chars,notes
+semantic,0.963,0.3,0.268,2471.0,5821.5,5.0,20,368.6,Selected for production — best context coherence
+fixed,1.0,0.6,0.75,2759.9,3601.6,5.0,21,1074.1,Breaks topic boundaries; not recommended
+sliding,0.952,0.7,0.639,2472.9,2980.4,5.0,24,1177.2,3x redundancy; high storage cost
+parent_child,1.0,0.7,0.473,2718.3,4033.8,5.0,30,733.0,Hierarchical parent-child linkage
+late,1.0,0.7,0.6,2621.7,4085.6,5.0,21,1108.4,Context-enriched; late chunking (JINA-style)

@@ -1,0 +1,21 @@
+query_id,category,question,rag_latency_ms,crag_latency_ms,latency_overhead_ms,latency_overhead_pct,rag_cost,crag_cost,corrections_applied,avg_document_grade,rag_contexts_count,crag_contexts_count
+1,clear,What 3 bedroom properties are available?,3977.8,24119.7,20141.9,506.4,0.001335,0.001321,2,0.5,10,10
+2,clear,Show me apartments for sale in Colombo.,4316.8,28125.8,23808.9,551.5,0.001577,0.001473,2,0.5,10,10
+3,clear,What luxury villas are available?,3725.4,25150.2,21424.8,575.1,0.001435,0.001526,2,0.5,10,10
+4,clear,List properties with swimming pools.,3637.4,24775.2,21137.8,581.1,0.001294,0.001351,2,0.5,10,10
+5,clear,What are the prices of 2 bedroom apartments?,3065.6,23357.4,20291.8,661.9,0.001362,0.00125,2,0.5,10,10
+6,vague,Nice place near the city.,6288.3,29848.8,23560.5,374.7,0.001882,0.001759,2,0.5,10,10
+7,vague,Something affordable.,5794.1,27146.2,21352.1,368.5,0.001716,0.001499,2,0.5,10,10
+8,vague,Good investment property.,6993.1,25880.2,18887.1,270.1,0.00205,0.00194,2,0.5,10,10
+9,vague,Family home with space.,5532.8,27534.5,22001.7,397.7,0.001719,0.001887,2,0.5,10,10
+10,vague,Modern property.,4733.9,32359.3,27625.4,583.6,0.001594,0.001562,2,0.5,10,10
+11,complex,What are the typical amenities in luxury properties near Colombo city center?,6792.8,31362.3,24569.6,361.7,0.001918,0.001678,2,0.5,10,10
+12,complex,Compare 3 bedroom houses vs apartments in terms of price and amenities.,8766.5,913475.7,904709.2,10320.1,0.001638,0.001546,2,0.5,10,10
+13,complex,Which properties offer ocean views and have more than 3 bedrooms?,4994.0,27657.4,22663.4,453.8,0.001689,0.001486,2,0.5,10,10
+14,complex,What is the price range for apartments with gym and parking facilities?,3609.6,25974.5,22364.8,619.6,0.001412,0.001385,2,0.5,10,10
+15,complex,Are there properties suitable for both residential and commercial use?,4617.1,24361.3,19744.2,427.6,0.001506,0.001438,2,0.5,10,10
+16,edge,Properties with helipads.,2974.5,26435.9,23461.3,788.7,0.001182,0.001191,2,0.5,10,10
+17,edge,Underwater properties.,3590.6,25080.5,21489.9,598.5,0.001342,0.001371,2,0.5,10,10
+18,edge,Properties available for barter trade.,3558.1,24655.8,21097.7,593.0,0.001402,0.001325,2,0.5,10,10
+19,edge,Do any properties have ocean views?,4273.1,23803.0,19529.9,457.0,0.001433,0.001162,2,0.5,10,10
+20,edge,Are there properties near Colombo city center?,4302.8,28213.9,23911.1,555.7,0.001551,0.001429,2,0.5,10,10

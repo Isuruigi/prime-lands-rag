@@ -1,0 +1,74 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual Environment
+.venv/
+venv/
+ENV/
+env/
+
+# Environment Variables
+.env
+.env.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# Data — keep corpus and chunks for submission
+# data/primelands_corpus.jsonl   <- include for submission
+# data/properties/               <- include for submission
+# data/chunks/                   <- include for submission
+qdrant_storage/
+
+# Logs
+logs/
+*.log
+
+# Outputs — keep all for submission
+# outputs/*.csv   <- include for submission
+# outputs/*.json  <- include for submission
+outputs/*.png
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Playwright
+playwright/.cache/
+
+# Test
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Report drafts (keep final PDF)
+report/*.docx
+report/*.md
+!report/engineering_report.pdf

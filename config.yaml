@@ -1,0 +1,102 @@
+# ============================================================
+# Prime Lands Platform — Central Configuration
+# Hybrid API: Claude for generation, OpenAI for embeddings
+# ============================================================
+
+crawler:
+  base_url: "https://www.primelands.lk"
+  max_pages: 60
+  rate_limit_seconds: 3.5
+  timeout_ms: 45000
+  headless: true
+  user_agent: "Mozilla/5.0 (compatible; PrimeLandsResearch/1.0; +https://primelands.lk)"
+  max_retries: 3
+  backoff_base: 2.0        # Exponential backoff base (seconds)
+  backoff_max: 30.0        # Cap on retry wait (seconds)
+  respect_robots_txt: false  # Disabled for educational purposes
+
+chunking:
+  semantic:
+    model: "sentence-transformers/all-MiniLM-L6-v2"
+    similarity_threshold: 0.85
+    min_tokens: 80
+    max_tokens: 512
+    sentence_splitter: "spacy"   # "spacy" or "nltk" or "regex"
+  fixed:
+    chunk_size: 512
+    overlap: 64
+  sliding:
+    window_size: 400
+    step_size: 150
+  parent_child:
+    parent_size: 1024
+    child_size: 256
+    link_children: true
+  late:
+    context_window: 512
+    prepend_ratio: 0.25   # fraction of window used for leading context
+
+embeddings:
+  provider: "openai"                    # OpenAI API embeddings
+  dense_model: "text-embedding-3-small" # 1536 dims — best value
+  dense_dimensions: 1536
+  sparse_model: "Qdrant/bm25"           # FastEmbed sparse model (BM25 stays local)
+  batch_size: 32                        # smaller batch — API rate limits
+
+qdrant:
+  host: "localhost"
+  port: 6333
+  collections:
+    semantic: "primelands_semantic"
+    fixed: "primelands_fixed"
+    sliding: "primelands_sliding"
+    parent_child: "primelands_parent_child"
+    late: "primelands_late"
+  hybrid_fusion: "rrf"   # Reciprocal Rank Fusion
+
+retrieval:
+  top_k: 10                 # Retrieve more, rerank to fewer
+  rerank_top_n: 5           # Final top-N after cross-encoder reranking
+  reranker_model: "cross-encoder/ms-marco-MiniLM-L-6-v2"
+  search_mode: "hybrid"     # "dense" | "sparse" | "hybrid"
+  mmr_lambda: 0.5           # Diversity vs relevance (MMR)
+
+llm:
+  provider: "anthropic"                      # Claude for generation
+  model: "claude-3-haiku-20240307"          # Confirmed working on this account
+  temperature: 0.2
+  max_tokens: 1024
+  streaming: false
+
+rag:
+  system_prompt: |
+    You are a real estate expert assistant for Prime Lands, Sri Lanka's premier property platform.
+    Answer questions about properties based ONLY on the provided context.
+    If the context doesn't contain the answer, say "I don't have that information in my database."
+    Be specific, cite property details, and maintain a professional tone.
+
+cag:
+  similarity_threshold: 0.92
+  cache_ttl_hours: 24
+  faq_ttl_multiplier: 7    # FAQs stay 7× longer
+  max_history_size: 500    # LRU eviction when exceeded
+
+crag:
+  # Per CRAG paper: grade each doc independently
+  doc_relevance_threshold: 0.5       # individual doc grade
+  global_confidence_threshold: 0.6   # triggers corrective retrieval
+  ambiguous_band: 0.1                # [threshold-band, threshold] = ambiguous zone
+  max_correction_iterations: 2
+  rewrite_temperature: 0.7
+  knowledge_refinement: true         # Strip irrelevant sentences from ambiguous docs
+
+evaluation:
+  ragas_metrics:
+    - "faithfulness"
+    - "answer_relevancy"
+    - "context_recall"
+    - "context_precision"
+  chunking_test_queries: 10
+  cag_simulation_queries: 100
+  crag_comparison_queries: 20
+  repeat_query_ratio: 0.6   # 60% repeated in CAG simulation
