@@ -1,4 +1,4 @@
-# 🏠 Prime Lands — Production-Grade Real Estate Intelligence Platform
+# 🏠 Prime Lands Production-Grade Real Estate Intelligence Platform
 
 > **Zuu Crew AI | AI Engineer Essentials Bootcamp | Mini Project 02 | Context Engineering**
 
